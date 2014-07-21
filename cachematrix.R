@@ -1,15 +1,34 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Training function from Programming Assignment 2.
+## Its actual usefullness is doubtful, but never mind that!
 
-## Write a short comment describing this function
+## Pseudo-class "matrix"
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  m <- NULL
+  set <- function(y) {
+    x <<- y
+    m <<- NULL
+  }
+  get <- function() x
+  setinv <- function(inv) m <<- inv
+  getinv <- function() m
+  list(set = set, get = get,
+       setinv = setinv,
+       getinv = getinv)
 }
 
+## Function which solves the matrix for its inverse
 
-## Write a short comment describing this function
-
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+CacheSolve <- function(x, ...) {
+  ## Setting the matrix inverse "property" if and only if it is not already set
+  
+  m <- x$getinv()
+  if(!is.null(m)) {
+    message("getting cached data")
+    return(m)
+  }
+  data <- x$get()
+  m <- solve(data, ...)
+  x$setinv(m)
+  m
 }
